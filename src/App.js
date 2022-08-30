@@ -12,8 +12,9 @@ function App() {
 	}
 
 	function handleDoneClick(e){
+		e.preventDefault();
 		const done = e.target.remove.value;
-		let allThings = things
+		let allThings = [...things]
 		for (let i=0; i < allThings.length; i++){
 			if (allThings[i] === done){
 				allThings.splice(i, 1);
@@ -21,6 +22,11 @@ function App() {
 		}
 		setThings(allThings)
 	}
+
+	// const clickToClear = event => {
+	// 	let allThings = []
+	// 	setThings(allThings)
+	// };
 
 	return (
 		<>
@@ -32,12 +38,12 @@ function App() {
 						<input type='text' className='form-control me-2' name='add' />
 						<input type='submit' value='Add' className='btn btn-success' />
 					</form>
-					<form className="col-6">
+					<form className="col-6" onSubmit={handleDoneClick}>
 						<div className="input-group">
 							<label htmlFor="remove" className="form-label me-2">Done with:</label>
-							<select className="form-select" onSubmit={handleDoneClick} id="inputGroupSelect04" name="remove" aria-label="Example select with button addon">
+							<select className="form-select" id="inputGroupSelect04" name="remove" aria-label="Example select with button addon">
 								<option defaultValue="Choose...">Choose...</option>
-								{things.map((t, i) => <option value={i+1}>{t}</option>)}
+								{things.map((t, i) => <option value={t}>{t}</option>)}
 							</select>
 							<input className="btn btn-success" type="submit" value="Done" />
 						</div>
